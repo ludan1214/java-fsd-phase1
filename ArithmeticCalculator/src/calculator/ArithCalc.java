@@ -5,10 +5,11 @@ import java.io.InputStreamReader;
 
 public class ArithCalc {
 	private static double solve(String lhs, String rhs, String op) {
-		double left = 0, right = 0, result = 0;
+		float left = 0, right = 0;
+		double result = 0;
 		try {
-			left = Double.parseDouble(lhs);
-			right = Double.parseDouble(rhs);
+			left = Float.parseFloat(lhs);
+			right = Float.parseFloat(rhs);
 		}
 		catch (Exception e) {
 			System.out.println("Invalid input!");
@@ -16,13 +17,13 @@ public class ArithCalc {
 			result = -1;
 		}
 		if (op.equals("+")) {
-			result = left + right;
+			result = (double) left + right;
 		} else if (op.equals("-")) {
-			result = left - right;
+			result = (double) left - right;
 		} else if (op.equals("*")){
-			result = left * right;
+			result = (double) left * right;
 		} else if (op.equals("/")){
-			result = left / right;
+			result = (double) left / right;
 		} else {
 			System.out.println("Invalid Operation");
 			result = -1;
