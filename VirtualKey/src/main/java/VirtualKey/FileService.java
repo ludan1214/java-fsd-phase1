@@ -5,45 +5,30 @@ import java.util.Scanner;
 import java.nio.file.StandardOpenOption;
 
 public class FileService {
-	public void displayDirectory(String directory) {
-		try {
-			File f = new File(directory);
-			File[] files = f.listFiles();
-			
-			if (files.length == 0) {
-				System.out.println("Empty Directory!");
-			} else {
-				for (int i = 0; i < files.length; i++) {
-					if (files[i].isFile()) 
-						System.out.println(files[i].getName());
-		        }
-			}
-		}
-		catch (Exception e) {
-			System.out.println(e.toString());
-		}
-	}
-	
-	private void addFile(String filename){
+	private boolean addFile(String filename){
 		try {
 			File f = new File(filename);
 			if (f.createNewFile()) {
 				System.out.println("File Successfully Added: " + filename);
+				return true;
 			} else {
 				System.out.println("File Already Exists");
 			}
 
 		} catch (Exception e) {
 			System.out.println(e.toString());
+			
 		}
+		return false;
 	}
 	
-	private void deleteFile(String filename) {
+	private boolean deleteFile(String filename) {
 		try {
 			File f = new File(filename);
 			if (f.exists()) {
 				f.delete();
 				System.out.println(filename + " successfully deleted!");
+				return true;
 			} else {
 				System.out.println("File not found");
 			}
@@ -51,20 +36,10 @@ public class FileService {
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
-	}
-	
-	private boolean search(String filename) {
-		File f = new File(System.getProperty("user.dir"));
-		File[] files = f.listFiles();
-		for (int i = 0; i < files.length; i++) {
-			if (files[i].getName().equals(filename)) {
-				return true;
-			}
-		}
 		return false;
 	}
 	
-	public void performOps() {
+	public void performOps(FileSet set) {
 		int option = 0;
 		Scanner sc = new Scanner(System.in);
 		boolean opt2 = true;
@@ -78,24 +53,32 @@ public class FileService {
 			}
 			catch (Exception e){
 				System.out.println(e.toString());
-				performOps();
+				performOps(set);
 				return;
 			}
 			switch (option) {
 			case 1: // Add a File
 				System.out.println("Enter a filename to add:");
 				String in = sc.next();
-				addFile(in);
+				if (addFile(in)) {
+					set.add(in);
+				}
+				System.out.println("Current files in List:");
+				System.out.println(set.toString());
 				break;
 			case 2: // Delete a file
 				System.out.println("Enter a filename to delete:");
 				in = sc.next();
-				deleteFile(in);
+				if (deleteFile(in)) {
+					set.delete(in);
+				}
+				System.out.println("Current files in List:");
+				System.out.println(set.toString());
 				break;
 			case 3: // Search a user
 				System.out.println("Enter a filename to search:");
 				in = sc.next();
-				if (search(in)) {
+				if (set.search(in)) {
 					System.out.println(in + " found!");
 				} else {
 					System.out.println(in + " not found!");
@@ -112,14 +95,12 @@ public class FileService {
 		}
 	}
 	
-	public void start() {
-		FileSet set = new FileSet();
+	public void start(FileSet set) {
 		boolean keepGoing = true;
 		int option = 0;
 		Scanner sc = new Scanner(System.in);
 		
 		while (keepGoing) {
-			System.out.println("Welcome!");
 			System.out.println("Select an option:\n" + 
 					"1. Display the current directory\n" +
 					"2. Perform Operations\n" + 
@@ -129,16 +110,16 @@ public class FileService {
 			}
 			catch (Exception e){
 				System.out.println(e.toString());
-				start();
+				start(set);
 				return;
 			}
 			switch (option) {
 			case 1: // Print out filenames in relative directory
 				System.out.println("Current File Names");
-				displayDirectory(System.getProperty("user.dir"));
+				System.out.println(set.toString());
 				break;
 			case 2: // Return details of user interface
-				performOps();
+				performOps(set);
 				break;
 			case 3: // Exit
 				System.out.println("Application Exited!");

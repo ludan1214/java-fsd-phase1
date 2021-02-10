@@ -8,6 +8,13 @@ import java.nio.file.Paths;
 public class Main {	
 	public static void main(String[] args) {
 		FileService fileServ = new FileService();
-		fileServ.start();
+		FileSet set = new FileSet();
+		System.out.println(
+		"|~~~~~~~~~~~~~~~~~~~~~~~~~|\n" +
+		"|         Welcome!        |\n" +
+		"| - Phase 1 End Project   |\n" +
+		"| - Written by Luc Le     |\n" +
+		"|~~~~~~~~~~~~~~~~~~~~~~~~~|\n");
+		fileServ.start(set);
 	}
 }
