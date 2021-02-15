@@ -1,10 +1,11 @@
 package VirtualKey;
 
 import java.io.File;
-import java.util.TreeSet;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class FileSet {
-	private static TreeSet<String> treeSet = new TreeSet<String>();
+	private static ArrayList<String> set = new ArrayList<String>();
 	
 	public FileSet() {
 		try {
@@ -13,7 +14,7 @@ public class FileSet {
 			if (files.length != 0) {
 				for (int i = 0; i < files.length; i++) {
 					if (files[i].isFile()) 
-						this.treeSet.add(files[i].getName());
+						this.set.add(files[i].getName());
 		        }
 			}
 		}
@@ -23,21 +24,25 @@ public class FileSet {
 	}
 	
 	public boolean add(String filename) {
-		return treeSet.add(filename);
+		return set.add(filename);
 	}
 	
 	public boolean delete(String filename) {
-		return treeSet.remove(filename);
+		return set.remove(filename);
 	}
 	
 	public boolean search(String filename) {
-		return treeSet.contains(filename);
+		return set.contains(filename);
+	}
+	
+	public void sort() {
+		Collections.sort(this.set); // Merge sort in Collections
 	}
 	
 	@Override
 	public String toString() {
 		StringBuilder setStr = new StringBuilder();
-		for (String filename : this.treeSet) {
+		for (String filename : this.set) {
 			setStr.append(filename + "\n");
 		}
 		return setStr.toString();

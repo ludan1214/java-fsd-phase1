@@ -39,7 +39,7 @@ public class FileService {
 		return false;
 	}
 	
-	public void performOps(FileSet set) {
+	private void performOps(FileSet set) {
 		int option = 0;
 		Scanner sc = new Scanner(System.in);
 		boolean opt2 = true;
@@ -63,6 +63,7 @@ public class FileService {
 				if (addFile(in)) {
 					set.add(in);
 				}
+				set.sort(); // Sort The List
 				System.out.println("Current files in List:");
 				System.out.println(set.toString());
 				break;
@@ -109,7 +110,7 @@ public class FileService {
 				option = sc.nextInt();
 			}
 			catch (Exception e){
-				System.out.println(e.toString());
+				System.out.println("\nInvalid Input! try again\n");
 				start(set);
 				return;
 			}
