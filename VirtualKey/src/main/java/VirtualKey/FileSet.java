@@ -24,15 +24,15 @@ public class FileSet {
 	}
 	
 	public boolean add(String filename) {
-		return set.add(filename);
+		return this.set.add(filename);
 	}
 	
 	public boolean delete(String filename) {
-		return set.remove(filename);
+		return this.set.remove(filename);
 	}
 	
-	public boolean search(String filename) {
-		return set.contains(filename);
+	public int search(String filename) {
+		return Collections.binarySearch(this.set, filename);
 	}
 	
 	public void sort() {

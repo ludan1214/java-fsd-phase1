@@ -79,7 +79,7 @@ public class FileService {
 			case 3: // Search a user
 				System.out.println("Enter a filename to search:");
 				in = sc.next();
-				if (set.search(in)) {
+				if (set.search(in) >= 0) {
 					System.out.println(in + " found!");
 				} else {
 					System.out.println(in + " not found!");
