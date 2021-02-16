@@ -32,7 +32,12 @@ public class FileSet {
 	}
 	
 	public int search(String filename) {
-		return Collections.binarySearch(this.set, filename);
+		// Ensure case insensitivity
+		ArrayList<String> temp = (ArrayList<String>) this.set.clone();
+		for (String str : temp) {
+			str.toLowerCase();
+		}
+		return Collections.binarySearch(temp, filename.toLowerCase());
 	}
 	
 	public void sort() {
